@@ -53,7 +53,6 @@ This project does that sorting automatically. You paste a message, and the app t
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/afeb8c2c-0e13-4f8d-a9f2-5ca9ef62d41a" alt="Dashboard after classifying several tickets" width="8<img width="1242" height="442" alt="Screenshot 2026-10-17 040627" src="https://github.com/user-attachments/assets/e5e7942e-d3b8-4ec3-b69d-5d020f449ea5" />
-0%">
 </p>
 <p align="center"><em>Classify a message, then watch the dashboard fill up: tickets are saved to SQLite and counted with SQL <code>GROUP BY</code>.</em></p>
 
