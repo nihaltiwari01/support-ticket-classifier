@@ -18,7 +18,7 @@
 <p align="center">
   <a href="#-what-is-this">About</a> ·
   <a href="#-features">Features</a> ·
-  <a href="#-screenshots">Screenshots</a> ·
+  <a href="#screenshots">Screenshots</a> ·
   <a href="#%EF%B8%8F-how-it-works">How it works</a> ·
   <a href="#-results">Results</a> ·
   <a href="#-getting-started">Get started</a> ·
@@ -44,6 +44,8 @@ This project does that sorting automatically. You paste a message, and the app t
 | 🗄️ **SQL analytics** | Tickets are stored in SQLite, and the dashboard uses `GROUP BY` queries for category counts |
 | 🌐 **REST API** | Flask endpoints `/predict` and `/stats` that the dashboard calls |
 | ✅ **Automated tests** | pytest checks the API, including empty-input handling |
+
+<a id="screenshots"></a>
 
 ## 🖼️ Screenshots
 
