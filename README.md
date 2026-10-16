@@ -79,10 +79,10 @@ This project does that sorting automatically. You paste a message, and the app t
 ## 🏗️ How it works
 
 ```mermaid
-flowchart LR
+flowchart TD
     A[Browser dashboard] -->|message| B[Flask API /predict]
     B --> C[TF-IDF + Logistic Regression]
-    C -->|category, confidence, top words| B
+    C -->|prediction + top words| B
     B -->|save ticket| D[(SQLite)]
     B -->|result + explanation| A
     A -->|load charts| E[Flask API /stats]
