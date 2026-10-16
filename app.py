@@ -45,19 +45,44 @@ def predict():
     if not message:
         return jsonify({"error": "Message is required"}), 400
 
-    probabilities = model.predict_proba([message])[0]
-    best = probabilities.argmax()
-    category = model.classes_[best]
+    tfidf = model.named_steps["tfidf"]
+    clf = model.named_steps["clf"]
+    vocab = tfidf.get_feature_names_out()
+    vec = tfidf.transform([message])
+    probabilities = clf.predict_proba(vec)[0]
+    order = probabilities.argsort()[::-1]
+    best = order[0]
+    best_guess = str(clf.classes_[best])
     confidence = round(float(probabilities[best]) * 100, 1)
+
+    category = best_guess
     if confidence < 50:
         category = "Needs review"
+
+    top = [
+        {"category": str(clf.classes_[i]), "probability": round(float(probabilities[i]) * 100, 1)}
+        for i in order[:3]
+    ]
+    columns = vec.nonzero()[1]
+    scored = sorted(
+        ((vocab[c], float(clf.coef_[best][c] * vec[0, c])) for c in columns),
+        key=lambda pair: -pair[1],
+    )
+    helpful_words = [{"word": w, "score": round(s, 2)} for w, s in scored[:5] if s > 0]
 
     with get_db() as conn:
         conn.execute(
             "INSERT INTO tickets (message, category, confidence) VALUES (?, ?, ?)",
             (message, category, confidence),
         )
-    return jsonify({"category": category, "confidence": confidence})
+    return jsonify({
+        "category": category,
+        "confidence": confidence,
+        "best_guess": best_guess,
+        "top": top,
+        "helpful_words": helpful_words,
+        "recognised_words": int(len(columns)),
+    })
 
 
 @app.route("/stats")
